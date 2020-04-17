@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'contant.dart';
- 
 
 class MyHeader extends StatelessWidget {
   final String topText;
   final String bottomText;
   final String imagePath;
-  
+
   const MyHeader({
-    Key key, this.topText, this.bottomText, this.imagePath,
+    Key key,
+    this.topText,
+    this.bottomText,
+    this.imagePath,
   }) : super(key: key);
 
   @override
@@ -26,8 +28,8 @@ class MyHeader extends StatelessWidget {
                 // begin: Alignment.topLeft,
                 // end: Alignment.bottomRight,
                 colors: [Colors.blue[600], Colors.indigo[600]]),
-            image: DecorationImage(
-                image: AssetImage("assets/images/virus.png"))),
+            image:
+                DecorationImage(image: AssetImage("assets/images/virus.png"))),
         child: Column(
           children: <Widget>[
             Align(
@@ -48,8 +50,7 @@ class MyHeader extends StatelessWidget {
                     left: 150,
                     child: Text(
                       "$topText \n$bottomText",
-                      style:
-                          myHeadingTextStyle.copyWith(color: Colors.white),
+                      style: myHeadingTextStyle.copyWith(color: Colors.white),
                     )),
                 Container()
               ],
@@ -60,7 +61,6 @@ class MyHeader extends StatelessWidget {
     );
   }
 }
-
 
 class MyCliper extends CustomClipper<Path> {
   @override

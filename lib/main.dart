@@ -1,4 +1,5 @@
 import 'package:covid19/contant.dart';
+import 'package:covid19/infoContainer.dart';
 import 'package:covid19/myHeader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: myBackgroundColor,
           fontFamily: "Poppins",
           textTheme: TextTheme(body1: TextStyle(color: myBodyTextColor))),
-      home: HomeScreen(),
+      home: InfoContent(),
     );
   }
 }

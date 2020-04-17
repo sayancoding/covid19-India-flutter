@@ -1,4 +1,5 @@
 import 'package:covid19/contant.dart';
+import 'package:covid19/myHeader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -36,7 +37,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
         body: Column(
       children: <Widget>[
-        MyHeader(),
+        MyHeader(imagePath: "assets/icons/Drcorona.svg",topText: "All you need",bottomText: "is stay at home",),
         Container(
           margin:EdgeInsets.symmetric(horizontal: 20) ,
           padding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),
@@ -176,78 +177,5 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class MyHeader extends StatelessWidget {
-  final String topText;
-  final String bottomText;
-  final String bottomText;
-  const MyHeader({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipPath(
-      clipper: MyCliper(),
-      child: Container(
-        padding: EdgeInsets.only(top: 40, left: 30, right: 20),
-        height: 350.0,
-        width: double.infinity,
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                // begin: Alignment.topLeft,
-                // end: Alignment.bottomRight,
-                colors: [Colors.blue[600], Colors.indigo[600]]),
-            image: DecorationImage(
-                image: AssetImage("assets/images/virus.png"))),
-        child: Column(
-          children: <Widget>[
-            Align(
-                alignment: Alignment.topRight,
-                child: SvgPicture.asset("assets/icons/menu.svg")),
-            SizedBox(height: 20),
-            Expanded(
-                child: Stack(
-              children: <Widget>[
-                SvgPicture.asset(
-                  "assets/icons/Drcorona.svg",
-                  width: 230,
-                  fit: BoxFit.fitWidth,
-                  alignment: Alignment.topCenter,
-                ),
-                Positioned(
-                    top: 20,
-                    left: 150,
-                    child: Text(
-                      "All you need \nto stay home",
-                      style:
-                          myHeadingTextStyle.copyWith(color: Colors.white),
-                    )),
-                Container()
-              ],
-            ))
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 
-
-class MyCliper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = Path();
-    path.lineTo(0, size.height - 80);
-    path.quadraticBezierTo(
-        size.width / 2, size.height, size.width, size.height - 80);
-    path.lineTo(size.width, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    return false;
-  }
-}

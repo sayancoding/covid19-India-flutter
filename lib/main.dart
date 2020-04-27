@@ -1,6 +1,7 @@
 import 'package:covid19/contant.dart';
 import 'package:covid19/infoContainer.dart';
 import 'package:covid19/myHeader.dart';
+import 'package:covid19/statesInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: myBackgroundColor,
           fontFamily: "Poppins",
           textTheme: TextTheme(body1: TextStyle(color: myBodyTextColor))),
-      home: InfoContent(),
+      home: StatesWiseInfo(),
     );
   }
 }

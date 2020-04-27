@@ -6,76 +6,80 @@ class InfoContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          MyHeader(
-            imagePath: "assets/icons/coronadr.svg",
-            topText: "Get to know",
-            bottomText: "about COVID 19",
-          ),
-          Container(
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Symptoms",
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 10,),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SymptomCard(imgPath: "assets/images/headache.png",text: "Headache",),
-                SymptomCard(imgPath: "assets/images/caugh.png",text: "Caugh",),
-                SymptomCard(imgPath: "assets/images/fever.png",text: "Fever",)
-              ],
-            ),
-          ),
-          SizedBox(height:20),
-          Container(
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Precautions",
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height:10),
-          SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-                      child: Container(
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-              PrecautionCard(imagePath: "assets/images/wear_mask.png",text: "Wear face mask",),
-              // PrecautionCard(imagePath: "assets/images/wear_hands.png",text: "Wash hand often ",),
-                ],
+          children: <Widget>[
+            MyHeader(
+              imagePath: "assets/icons/coronadr.svg",
+              topText: "Get to know",
+              bottomText: "about COVID 19",
+            ),
+            Container(
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "Symptoms",
+                        style:
+                            TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+                      )
+                    ],
+                  ),
+                ),
               ),
             ),
-          )
-        ],
+            SizedBox(height: 10,),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+                        child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    SymptomCard(imgPath: "assets/images/headache.png",text: "Headache",),
+                    SymptomCard(imgPath: "assets/images/caugh.png",text: "Caugh",),
+                    SymptomCard(imgPath: "assets/images/fever.png",text: "Fever",)
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height:20),
+            Container(
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "Precautions",
+                        style:
+                            TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height:10),
+            Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                PrecautionCard(imagePath: "assets/images/wear_mask.png",text: "Wear face mask",),
+                PrecautionCard(imagePath: "assets/images/wear_hands.png",text: "Wash hand often ",),
+                  ],
+                ),
+              ),
+            
+          ],
+        ),
       ),
     );
   }

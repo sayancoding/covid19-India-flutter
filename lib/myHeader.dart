@@ -20,8 +20,8 @@ class MyHeader extends StatelessWidget {
     return ClipPath(
       clipper: MyCliper(),
       child: Container(
-        padding: EdgeInsets.only(top: 40, left: 30, right: 20),
-        height: 350.0,
+        padding: EdgeInsets.only(top: 40, left: 16, right: 20),
+        height: 330.0,
         width: double.infinity,
         decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -47,7 +47,7 @@ class MyHeader extends StatelessWidget {
                 ),
                 Positioned(
                     top: 20,
-                    left: 150,
+                    left: 190,
                     child: Text(
                       "$topText \n$bottomText",
                       style: myHeadingTextStyle.copyWith(color: Colors.white),

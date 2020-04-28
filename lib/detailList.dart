@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:auto_size_text/auto_size_text.dart';
 
 class ListData extends StatelessWidget {
   final String stateName;
@@ -19,24 +19,26 @@ class ListData extends StatelessWidget {
         Container(
             margin: EdgeInsets.symmetric(horizontal: 1.0),
             width: MediaQuery.of(context).size.width * 0.28,
-            height: 26.0,
+            height: 38.0,
             decoration: BoxDecoration(
                 color:
                     Colors.blueGrey[100].withOpacity(0.2),
                 borderRadius:
                     BorderRadius.all(Radius.circular(6))),
             child: Center(
-                child: Text(
+                child: AutoSizeText(
               stateName,
+              textAlign: TextAlign.center,
               style: TextStyle(
                   color: Colors.grey[700],
                   fontSize: 12.0,
                   fontWeight: FontWeight.w600),
+                  maxLines: 2,
             ))),
         Container(
             margin: EdgeInsets.symmetric(horizontal: 1.0),
             width: MediaQuery.of(context).size.width * 0.18,
-            height: 26.0,
+            height: 38.0,
             decoration: BoxDecoration(
                 color:
                     Colors.blueGrey[100].withOpacity(0.2),
@@ -53,7 +55,7 @@ class ListData extends StatelessWidget {
         Container(
             margin: EdgeInsets.symmetric(horizontal: 1.0),
             width: MediaQuery.of(context).size.width * 0.18,
-            height: 26.0,
+            height: 38.0,
             decoration: BoxDecoration(
                 color:
                     Colors.blueGrey[100].withOpacity(0.2),
@@ -70,7 +72,7 @@ class ListData extends StatelessWidget {
         Container(
             margin: EdgeInsets.symmetric(horizontal: 1.0),
             width: MediaQuery.of(context).size.width * 0.16,
-            height: 26.0,
+            height: 38.0,
             decoration: BoxDecoration(
                 color:
                     Colors.blueGrey[100].withOpacity(0.2),
@@ -87,7 +89,7 @@ class ListData extends StatelessWidget {
         Container(
             margin: EdgeInsets.symmetric(horizontal: 1.0),
             width: MediaQuery.of(context).size.width * 0.12,
-            height: 26.0,
+            height: 38.0,
             decoration: BoxDecoration(
                 color:
                     Colors.blueGrey[100].withOpacity(0.2),

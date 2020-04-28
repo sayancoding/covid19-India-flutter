@@ -48,41 +48,54 @@ class _StatesWiseInfoState extends State<StatesWiseInfo> {
     "Uttarakhand",
     "West Bengal"
   ];
+  List finalFormatedData = [];
   String url = "https://api.covid19india.org/state_district_wise.json";
-  Future<List<String>> _getData() async {
+  Future<List> _getData() async {
     var response = await http.get(url);
     Map data = json.decode(response.body);
     // print(data);
+    List formated = [];
     List st = [];
-    data.forEach((k,v)=>{
-      st.add(v["districtData"])
-    });
-    // for(int i = 0;i<st.length;i++)
-    // {
-    // Map el = st[i];
-    // el.forEach((k,v)=>{
-    //   print(v)
-    // });
-    // }
-    List subDistrict = [];
-    Map el = st[0];
-    el.forEach((k,v)=>{
-      subDistrict.add(v)
-    });
+    data.forEach((k, v) => {st.add(v["districtData"])});
+    for (int i = 0; i < st.length; i++) {
+      List subDistrict = [];
+      Map el = st[i];
+      el.forEach((k, v) => {subDistrict.add(v)});
       List totalSub = [];
-    for(int i=0;i<subDistrict.length;i++)
-    {
-      List subValue = [];
-      Map sub = subDistrict[i];
-      sub.forEach((k,v)=>{
-        if(k=="active"|| k=="confirmed"|| k=="deceased" || k =="recovered" )
-        subValue.add(v)
-      });
-      totalSub.add(subValue);
+      for (int i = 0; i < subDistrict.length; i++) {
+        List subValue = [];
+        Map sub = subDistrict[i];
+        sub.forEach((k, v) => {
+              if (k == "active" ||
+                  k == "confirmed" ||
+                  k == "deceased" ||
+                  k == "recovered")
+                subValue.add(v)
+            });
+        totalSub.add(subValue);
+      }
+      formated.add(totalSub);
     }
-    print(totalSub);
-    // print(el);
-    return stateNameList;
+
+    for (int st = 0; st < formated.length; st++) {
+      List temp = [];
+      int act = 0, confrm = 0, deth = 0, rcrvd = 0;
+      for (int i = 0; i < formated[st].length; i++) {
+        act += (formated[st][i][0]);
+        confrm += (formated[st][i][1]);
+        deth += (formated[st][i][2]);
+        rcrvd += (formated[st][i][3]);
+      }
+      temp.add(stateNameList[st]);
+      temp.add(act);
+      temp.add(confrm);
+      temp.add(deth);
+      temp.add(rcrvd);
+      finalFormatedData.add(temp);
+    }
+    print(finalFormatedData);
+
+    return finalFormatedData;
   }
 
   @override
@@ -162,15 +175,15 @@ class _StatesWiseInfoState extends State<StatesWiseInfo> {
                                 return ListView.builder(
                                     itemCount: snapshot.data == null
                                         ? 0
-                                        : snapshot.data.length,
+                                        : 32,
                                     itemBuilder:
                                         (BuildContext context, int index) {
                                       return ListData(
-                                        stateName: snapshot.data[index],
-                                        death: "",
-                                        recovered: "",
-                                        active: "",
-                                        confirmed: "",
+                                        stateName: snapshot.data[index][0],
+                                        death: snapshot.data[index][3].toString(),
+                                        recovered: snapshot.data[index][4].toString(),
+                                        active: snapshot.data[index][1].toString(),
+                                        confirmed: snapshot.data[index][2].toString(),
                                       );
                                     });
                               }),

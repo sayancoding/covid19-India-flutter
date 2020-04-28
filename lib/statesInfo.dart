@@ -1,6 +1,7 @@
 import 'package:covid19/detailList.dart';
 import 'package:covid19/myHeader.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'dart:async';
 import 'package:http/http.dart' as http;
@@ -49,6 +50,10 @@ class _StatesWiseInfoState extends State<StatesWiseInfo> {
     "West Bengal"
   ];
   List finalFormatedData = [];
+  
+  // DateTime now = DateTime.now();
+String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now());
+
   String url = "https://api.covid19india.org/state_district_wise.json";
   Future<List> _getData() async {
     var response = await http.get(url);
@@ -93,7 +98,7 @@ class _StatesWiseInfoState extends State<StatesWiseInfo> {
       temp.add(rcrvd);
       finalFormatedData.add(temp);
     }
-    print(finalFormatedData);
+    // print(MediaQuery.of(context).size.height);
 
     return finalFormatedData;
   }
@@ -124,6 +129,11 @@ class _StatesWiseInfoState extends State<StatesWiseInfo> {
                         style: TextStyle(
                             fontWeight: FontWeight.w600, fontSize: 18.0),
                       ),
+                      SizedBox(width: 4.0,),
+                      Text(formattedDate,style: TextStyle(
+                        color: Colors.orangeAccent,
+                        fontSize: 10.0
+                      ),)
                     ],
                   ),
                   SizedBox(
@@ -162,7 +172,7 @@ class _StatesWiseInfoState extends State<StatesWiseInfo> {
                           ],
                         ),
                         Container(
-                          height: MediaQuery.of(context).size.height * 0.5,
+                          height: MediaQuery.of(context).size.height * 0.45,
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(color: Colors.white),
                           child: FutureBuilder(
@@ -187,6 +197,12 @@ class _StatesWiseInfoState extends State<StatesWiseInfo> {
                                       );
                                     });
                               }),
+                        ),
+                        SizedBox(height: 4.0,),
+                        Container(
+                          child: Text("Source: covid19india.org",style: TextStyle(
+                            fontSize: 8.0
+                          ),),
                         )
                       ],
                     ),

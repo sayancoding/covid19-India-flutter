@@ -7,7 +7,7 @@ class MyHeader extends StatelessWidget {
   final String topText;
   final String bottomText;
   final String imagePath;
-
+  
   const MyHeader({
     Key key,
     this.topText,
@@ -20,13 +20,12 @@ class MyHeader extends StatelessWidget {
     return ClipPath(
       clipper: MyCliper(),
       child: Container(
-        padding: EdgeInsets.only(top: 40, left: 16, right: 20),
-        height: 330.0,
+        padding: EdgeInsets.only(top: 30, left: 10, right: 20),
+        height: MediaQuery.of(context).size.height*0.4,
+        // height: (MediaQuery.of(context).size.height<641)?MediaQuery.of(context).size.height*0.41:MediaQuery.of(context).size.height*0.41,
         width: double.infinity,
         decoration: BoxDecoration(
             gradient: LinearGradient(
-                // begin: Alignment.topLeft,
-                // end: Alignment.bottomRight,
                 colors: [Colors.blue[600], Colors.indigo[600]]),
             image:
                 DecorationImage(image: AssetImage("assets/images/virus.png"))),
@@ -50,7 +49,11 @@ class MyHeader extends StatelessWidget {
                     left: 190,
                     child: Text(
                       "$topText \n$bottomText",
-                      style: myHeadingTextStyle.copyWith(color: Colors.white),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: (MediaQuery.of(context).size.width<362)?MediaQuery.of(context).size.width*0.046:MediaQuery.of(context).size.width*0.052,
+                        fontWeight: FontWeight.w600,
+                      ),
                     )),
                 Container()
               ],

@@ -55,7 +55,6 @@ class _HomeScreenState extends State<HomeScreen> {
         if(k == "value")
         indiaData.add(v)});
     }
-    // print(indiaData);
     return "indiaData";
   }
   //world api
@@ -83,119 +82,121 @@ Future<String> _getWorldData() async{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
+        body: SingleChildScrollView(
+                  child: Column(
       children: <Widget>[
-        MyHeader(imagePath: "assets/icons/Drcorona.svg",topText: "India need you",bottomText: "all stay at home",),
-        SizedBox(height: 0,),
-        Padding(padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                RichText(text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "India's Overview\n",
-                      style: TextStyle(
-                        color: Colors.grey[800],
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600
+          MyHeader(imagePath: "assets/icons/Drcorona.svg",topText: "India need you",bottomText: "all stay at home",),
+          SizedBox(height: 0,),
+          Padding(padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  RichText(text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "India's Overview\n",
+                        style: TextStyle(
+                          color: Colors.grey[800],
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600
+                        ),
                       ),
-                    ),
-                  ]
-                )
-                ),
-                Spacer(),
-                Text(
-                  today,
-                  style: TextStyle(
-                    color: myPrimaryColor
+                    ]
+                  )
                   ),
+                  Spacer(),
+                  Text(
+                    today,
+                    style: TextStyle(
+                      color: myPrimaryColor
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 12,horizontal:16),
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(25),
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset(0,6),
+                  blurRadius: 30,
+                  color: myShadowColor
                 )
-              ],
-            )
-          ],
-        ),
-        ),
-        Container(
-          margin: EdgeInsets.symmetric(vertical: 12,horizontal:16),
-          padding: EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(25),
-            boxShadow: [
-              BoxShadow(
-                offset: Offset(0,6),
-                blurRadius: 30,
-                color: myShadowColor
-              )
-            ]
+              ]
+            ),
+            
+            child: FutureBuilder(
+                  future: _getData(),
+                  builder: (BuildContext context,AsyncSnapshot snapshot){
+                    if(snapshot.data == null)
+                    return Container(child: Text("Loading.."),);
+                    return Container(
+                      child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+              Counter(title: "Infected",color: myPrimaryColor,number: indiaData[0],),
+              Counter(title: "Recovered",color: myRecovercolor,number: indiaData[1],),
+              Counter(title: "Deaths",color: myDeathColor,number: indiaData[2],),
+            ],
+            ),
+                    );
+                  }
+                ),
           ),
-          
-          child: FutureBuilder(
-                future: _getData(),
-                builder: (BuildContext context,AsyncSnapshot snapshot){
-                  if(snapshot.data == null)
-                  return Container(child: Text("Loading.."),);
-                  return Container(
-                    child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          SizedBox(height: 8,),
+          Row(
             children: <Widget>[
-            Counter(title: "Infected",color: myPrimaryColor,number: indiaData[0],),
-            Counter(title: "Recovered",color: myRecovercolor,number: indiaData[1],),
-            Counter(title: "Deaths",color: myDeathColor,number: indiaData[2],),
-          ],
-          ),
-                  );
-                }
-              ),
-        ),
-        SizedBox(height: 8,),
-        Row(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0,),
-              child: Text("World Pandemic",style: TextStyle(
-                fontWeight: FontWeight.w600
-              ),),
-            )
-          ],
-        ),
-        Container(
-          margin: EdgeInsets.symmetric(vertical: 12,horizontal:16),
-          padding: EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(25),
-            boxShadow: [
-              BoxShadow(
-                offset: Offset(0,6),
-                blurRadius: 30,
-                color: myShadowColor
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0,),
+                child: Text("World Pandemic",style: TextStyle(
+                  fontWeight: FontWeight.w600
+                ),),
               )
-            ]
+            ],
           ),
-          
-          child: FutureBuilder(
-                future: _getWorldData(),
-                builder: (BuildContext context,AsyncSnapshot snapshot){
-                  if(snapshot.data == null)
-                  return Container(child: Text("Loading.."),);
-                  return Container(
-                    child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-            Counter(title: "Infected",color: myPrimaryColor,number: worldData[0],),
-            Counter(title: "Recovered",color: myRecovercolor,number: worldData[1],),
-            Counter(title: "Deaths",color: myDeathColor,number: worldData[2],),
-          ],
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 12,horizontal:16),
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(25),
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset(0,6),
+                  blurRadius: 30,
+                  color: myShadowColor
+                )
+              ]
+            ),
+            
+            child: FutureBuilder(
+                  future: _getWorldData(),
+                  builder: (BuildContext context,AsyncSnapshot snapshot){
+                    if(snapshot.data == null)
+                    return Container(child: Text("Loading.."),);
+                    return Container(
+                      child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+              Counter(title: "Infected",color: myPrimaryColor,number: worldData[0],),
+              Counter(title: "Recovered",color: myRecovercolor,number: worldData[1],),
+              Counter(title: "Deaths",color: myDeathColor,number: worldData[2],),
+            ],
+            ),
+                    );
+                  }
+                ),
           ),
-                  );
-                }
-              ),
-        ),
       ],
     ),
+        ),
     bottomNavigationBar: AnimatedBottomBar(
       barItems: widget.barItems,
         animationDuration: const Duration(milliseconds: 300),

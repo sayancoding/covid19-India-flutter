@@ -124,112 +124,114 @@ String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now())
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          MyHeader(
-            imagePath: "assets/icons/symptoms.svg",
-            topText: "People're",
-            bottomText: "in Risk Statewise",
-          ),
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      body: SingleChildScrollView(
               child: Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Icon(Icons.ac_unit),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Text(
-                        "India's Statewise",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 18.0),
-                      ),
-                      SizedBox(width: 4.0,),
-                      Text(formattedDate,style: TextStyle(
-                        color: Colors.orangeAccent,
-                        fontSize: 10.0
-                      ),)
-                    ],
-                  ),
-                  SizedBox(
-                    height: 8.0,
-                  ),
-                  Container(
-                    child: Column(
+          children: <Widget>[
+            MyHeader(
+              imagePath: "assets/icons/symptoms.svg",
+              topText: "People're",
+              bottomText: "in Risk Statewise",
+            ),
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Column(
+                  children: <Widget>[
+                    Row(
                       children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            ListHead(
-                              widthHead: 0.28,
-                              textColor: Colors.black,
-                              text: "State",
-                            ),
-                            ListHead(
-                              widthHead: 0.18,
-                              textColor: Colors.red[600],
-                              text: "Cnfrm",
-                            ),
-                            ListHead(
-                              widthHead: 0.18,
-                              textColor: Colors.blue[500],
-                              text: "Actv",
-                            ),
-                            ListHead(
-                              widthHead: 0.16,
-                              textColor: Colors.green[500],
-                              text: "Rcvr",
-                            ),
-                            ListHead(
-                              widthHead: 0.12,
-                              textColor: Colors.grey[600],
-                              text: "Dth",
-                            ),
-                          ],
+                        Icon(Icons.ac_unit),
+                        SizedBox(
+                          width: 10.0,
                         ),
-                        Container(
-                          height: MediaQuery.of(context).size.height * 0.39,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(color: Colors.white),
-                          child: FutureBuilder(
-                              future: _getData(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot snapshot) {
-                                if (snapshot.data == null) {
-                                  return Center(child: Text("Loading.."));
-                                }
-                                return ListView.builder(
-                                    itemCount: snapshot.data == null
-                                        ? 0
-                                        : 32,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return ListData(
-                                        stateName: snapshot.data[index][0],
-                                        death: snapshot.data[index][3].toString(),
-                                        recovered: snapshot.data[index][4].toString(),
-                                        active: snapshot.data[index][1].toString(),
-                                        confirmed: snapshot.data[index][2].toString(),
-                                      );
-                                    });
-                              }),
+                        Text(
+                          "India's Statewise",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 18.0),
                         ),
-                        SizedBox(height: 4.0,),
-                        Container(
-                          child: Text("Source: covid19india.org",style: TextStyle(
-                            fontSize: 8.0
-                          ),),
-                        )
+                        SizedBox(width: 4.0,),
+                        Text(formattedDate,style: TextStyle(
+                          color: Colors.orangeAccent,
+                          fontSize: 10.0
+                        ),)
                       ],
                     ),
-                  )
-                ],
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    Container(
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              ListHead(
+                                widthHead: 0.28,
+                                textColor: Colors.black,
+                                text: "State",
+                              ),
+                              ListHead(
+                                widthHead: 0.18,
+                                textColor: Colors.red[600],
+                                text: "Cnfrm",
+                              ),
+                              ListHead(
+                                widthHead: 0.18,
+                                textColor: Colors.blue[500],
+                                text: "Actv",
+                              ),
+                              ListHead(
+                                widthHead: 0.16,
+                                textColor: Colors.green[500],
+                                text: "Rcvr",
+                              ),
+                              ListHead(
+                                widthHead: 0.12,
+                                textColor: Colors.grey[600],
+                                text: "Dth",
+                              ),
+                            ],
+                          ),
+                          Container(
+                            height: MediaQuery.of(context).size.height * 0.39,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(color: Colors.white),
+                            child: FutureBuilder(
+                                future: _getData(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot snapshot) {
+                                  if (snapshot.data == null) {
+                                    return Center(child: Text("Loading.."));
+                                  }
+                                  return ListView.builder(
+                                      itemCount: snapshot.data == null
+                                          ? 0
+                                          : 32,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return ListData(
+                                          stateName: snapshot.data[index][0],
+                                          death: snapshot.data[index][3].toString(),
+                                          recovered: snapshot.data[index][4].toString(),
+                                          active: snapshot.data[index][1].toString(),
+                                          confirmed: snapshot.data[index][2].toString(),
+                                        );
+                                      });
+                                }),
+                          ),
+                          SizedBox(height: 4.0,),
+                          Container(
+                            child: Text("Source: covid19india.org",style: TextStyle(
+                              fontSize: 8.0
+                            ),),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
       bottomNavigationBar: AnimatedBottomBar(
       barItems: widget.barItems,

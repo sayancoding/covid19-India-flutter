@@ -31,7 +31,7 @@ class Counter extends StatelessWidget {
         Text(
           "$number",
           style: TextStyle(
-            fontSize: 30,
+            fontSize: 22,
             color: Colors.black.withOpacity(0.7),
             fontWeight: FontWeight.w500
           ),

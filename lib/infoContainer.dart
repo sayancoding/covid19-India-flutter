@@ -1,8 +1,32 @@
 import 'package:covid19/contant.dart';
 import 'package:covid19/myHeader.dart';
+import 'package:covid19/navigationBottomBar.dart';
 import 'package:flutter/material.dart';
 
-class InfoContent extends StatelessWidget {
+class InfoContent extends StatefulWidget {
+  final List<BarItem> barItems = [
+    BarItem(
+      text: "Home",
+      iconData: Icons.bug_report,
+      color: Colors.blueAccent,
+    ),
+    BarItem(
+      text: "Statewise",
+      iconData: Icons.location_city,
+      color: Colors.redAccent,
+    ),
+    BarItem(
+      text: "Precaution",
+      iconData: Icons.verified_user,
+      color: Colors.teal[500],
+    )
+  ];
+  @override
+  _InfoContentState createState() => _InfoContentState();
+}
+
+class _InfoContentState extends State<InfoContent> {
+  int selectedItem = 2 ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,7 +36,7 @@ class InfoContent extends StatelessWidget {
           children: <Widget>[
             MyHeader(
               imagePath: "assets/icons/coronadr.svg",
-              topText: "Get to know",
+              topText: "Get aware",
               bottomText: "about COVID 19",
             ),
             Container(
@@ -48,7 +72,7 @@ class InfoContent extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height:20),
+            SizedBox(height:8),
             Container(
               child: Align(
                 alignment: Alignment.topLeft,
@@ -67,19 +91,29 @@ class InfoContent extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height:10),
+            SizedBox(height:2),
             Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
+              height: MediaQuery.of(context).size.height*0.2,
+              width: MediaQuery.of(context).size.width,
+              child: ListView(
+                children: <Widget>[
                 PrecautionCard(imagePath: "assets/images/wear_mask.png",text: "Wear face mask",),
-                PrecautionCard(imagePath: "assets/images/wear_hands.png",text: "Wash hand often ",),
-                  ],
-                ),
+                PrecautionCard(imagePath: "assets/images/wash_hands.png",text: "Wash Hand often",),
+                ],
               ),
-            
+            )
           ],
         ),
+      ),
+      bottomNavigationBar: AnimatedBottomBar(
+        barItems: widget.barItems,
+        animationDuration: const Duration(milliseconds: 300),
+        onTapBar: (index){
+          setState(() {
+            selectedItem = index;
+            // print(selectedItem);
+          });
+        },
       ),
     );
   }

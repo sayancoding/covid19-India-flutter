@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: myBackgroundColor,
           fontFamily: "Poppins",
           textTheme: TextTheme(body1: TextStyle(color: myBodyTextColor))),
-          initialRoute: '/precautions',
+          initialRoute: '/',
           routes: {
             '/': (context)=> HomeScreen(),
             '/statewise':(context)=> StatesWiseInfo(),

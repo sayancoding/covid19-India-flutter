@@ -111,9 +111,9 @@ class _InfoContentState extends State<InfoContent> {
         onTapBar: (index){
           setState(() {
             selectedItem = index;
-            // print(selectedItem);
           });
         },
+        gettingSelected : 2
       ),
     );
   }

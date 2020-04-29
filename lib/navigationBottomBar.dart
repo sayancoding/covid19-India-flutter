@@ -18,6 +18,13 @@ class AnimatedBottomBar extends StatefulWidget {
 class _AnimatedBottomBarState extends State<AnimatedBottomBar> with TickerProviderStateMixin {
   int selectedItem = 0;
   @override
+  void initState() {
+    setState(() {
+      selectedItem = widget.gettingSelected;
+    });
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return Material(
       elevation: 10.0,
@@ -43,10 +50,21 @@ class _AnimatedBottomBarState extends State<AnimatedBottomBar> with TickerProvid
       _barItem.add(InkWell(
         splashColor: Colors.transparent,
         onTap: () {
-          Navigator.pushNamed(context, '/');
           setState(() {
+            if(this.selectedItem !=i){
             this.selectedItem = i;
             widget.onTapBar(this.selectedItem);
+          print(selectedItem);
+          if(selectedItem == 0){
+          Navigator.pushNamed(context, '/');
+          }
+          if(selectedItem == 1){
+            Navigator.pushNamed(context, '/statewise');
+          }
+          if(selectedItem == 2){
+            Navigator.pushNamed(context, '/precautions');
+          }
+            }
           });
         },
         child: AnimatedContainer(

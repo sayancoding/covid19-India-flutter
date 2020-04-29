@@ -1,5 +1,6 @@
 import 'package:covid19/detailList.dart';
 import 'package:covid19/myHeader.dart';
+import 'package:covid19/navigationBottomBar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -8,6 +9,23 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class StatesWiseInfo extends StatefulWidget {
+  final List<BarItem> barItems = [
+    BarItem(
+      text: "Home",
+      iconData: Icons.bug_report,
+      color: Colors.blueAccent,
+    ),
+    BarItem(
+      text: "Statewise",
+      iconData: Icons.location_city,
+      color: Colors.redAccent,
+    ),
+    BarItem(
+      text: "Precaution",
+      iconData: Icons.verified_user,
+      color: Colors.teal[500],
+    )
+  ];
   StatesWiseInfo({Key key}) : super(key: key);
 
   @override
@@ -15,6 +33,7 @@ class StatesWiseInfo extends StatefulWidget {
 }
 
 class _StatesWiseInfoState extends State<StatesWiseInfo> {
+  int selectedItem = 1;
   List<String> stateNameList = [
     "Andaman and Nicobar Islands",
     "Andhra Pradesh",
@@ -98,7 +117,6 @@ String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now())
       temp.add(rcrvd);
       finalFormatedData.add(temp);
     }
-    // print(MediaQuery.of(context).size.height);
 
     return finalFormatedData;
   }
@@ -172,7 +190,7 @@ String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now())
                           ],
                         ),
                         Container(
-                          height: MediaQuery.of(context).size.height * 0.45,
+                          height: MediaQuery.of(context).size.height * 0.39,
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(color: Colors.white),
                           child: FutureBuilder(
@@ -213,6 +231,17 @@ String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now())
           )
         ],
       ),
+      bottomNavigationBar: AnimatedBottomBar(
+      barItems: widget.barItems,
+        animationDuration: const Duration(milliseconds: 300),
+        onTapBar: (index){
+          setState(() {
+            selectedItem = index;
+            // print(selectedItem);
+          });
+        },
+        gettingSelected: 1,
+    ),
     );
   }
 }

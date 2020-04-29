@@ -1,13 +1,37 @@
 import 'package:covid19/counter.dart';
 import 'package:covid19/myHeader.dart';
+import 'package:covid19/navigationBottomBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'contant.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  final List<BarItem> barItems = [
+    BarItem(
+      text: "Home",
+      iconData: Icons.bug_report,
+      color: Colors.blueAccent,
+    ),
+    BarItem(
+      text: "Statewise",
+      iconData: Icons.location_city,
+      color: Colors.redAccent,
+    ),
+    BarItem(
+      text: "Precaution",
+      iconData: Icons.verified_user,
+      color: Colors.teal[500],
+    )
+  ];
+  // const HomeScreen({Key key}) : super(key: key);
 
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int selectedItem = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,51 +128,19 @@ class HomeScreen extends StatelessWidget {
           ],
           ),
         ),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 8),
-         child: Row(
-           children: <Widget>[
-             Text(
-               "Spread Out The World",
-               style: TextStyle(
-                 color: Colors.black.withOpacity(0.5),
-                 fontWeight: FontWeight.w700,
-                 fontSize: 14
-               ),
-            ),
-            Spacer(),
-             Text(
-               "See more",
-               style: TextStyle(
-                 fontWeight: FontWeight.w600,
-                 color: Colors.blue,
-                 fontSize: 14
-               ),
-            ),
-           ],
-         ), 
-        ),
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 20),
-          height: 180,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                offset: Offset(0, 4),
-                blurRadius: 30,
-                color: myShadowColor
-              )
-            ]
-          ),
-          child: Image.asset("assets/images/map.png",
-            // fit: BoxFit.,          
-          ),
-        )
       ],
-    )
+    ),
+    bottomNavigationBar: AnimatedBottomBar(
+      barItems: widget.barItems,
+        animationDuration: const Duration(milliseconds: 300),
+        onTapBar: (index){
+          setState(() {
+            selectedItem = index;
+            // print(selectedItem);
+          });
+        },
+        gettingSelected: 0,
+    ),
     );
   }
 }

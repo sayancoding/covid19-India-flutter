@@ -28,7 +28,6 @@ class HomeScreen extends StatefulWidget {
       color: Colors.teal[500],
     )
   ];
-  
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -36,178 +35,222 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  void initState() {
+    setState(() {
+      indiaData = [];
+      worldData = [];
+    });
+    super.initState();
+  }
+
+  @override
   int selectedItem = 0;
   String today = DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now());
-
   List worldData = [];
   List indiaData = [];
   String url = "https://covid19.mathdro.id/api/countries/india";
-  Future<String> _getData() async{
-  List rawListing = [];
+  Future<String> _getData() async {
+    List rawListing = [];
     var res = await http.get(url);
     Map data = json.decode(res.body);
-    data.forEach((k,v)=>{
-      if(k != "lastUpdate")
-      rawListing.add(v)});
-    for(int i=0;i<rawListing.length;i++){
+    data.forEach((k, v) => {if (k != "lastUpdate") rawListing.add(v)});
+    for (int i = 0; i < rawListing.length; i++) {
       Map temp = rawListing[i];
-      temp.forEach((k,v)=>{
-        if(k == "value")
-        indiaData.add(v)});
+      temp.forEach((k, v) => {if (k == "value") indiaData.add(v)});
     }
     return "indiaData";
   }
+
+  // Future<List<String>> _getData() async {
+  //   List rawList = [];
+  //   dynamic data = await http.get(url);
+  //   Map<String, dynamic> mapData = json.decode(data.body);
+
+  //   mapData.forEach((k, v) => {
+  //         if (k == 'confirmed' || k == 'recovered' || k == 'deaths')
+  //           {rawList.add(v)}
+  //       });
+  //   print(rawList);
+  //   return indiaData;
+  // }
+
   //world api
   String worldUrl = "https://covid19.mathdro.id/api/";
-Future<String> _getWorldData() async{
-  List rawList = [];
+  Future<String> _getWorldData() async {
+    indiaData.clear();
+    worldData.clear();
+    List rawList = [];
     var res = await http.get(worldUrl);
     Map data = json.decode(res.body);
-    data.forEach((k,v)=>{
-      if(k == "confirmed" || k =="recovered" || k =="deaths")
-      rawList.add(v)});
-    for(int i=0;i<rawList.length;i++){
+    data.forEach((k, v) => {
+          if (k == "confirmed" || k == "recovered" || k == "deaths")
+            rawList.add(v)
+        });
+    for (int i = 0; i < rawList.length; i++) {
       Map temp = rawList[i];
-      temp.forEach((k,v)=>{
-        if(k == "value")
-        worldData.add(v)});
+      temp.forEach((k, v) => {if (k == "value") worldData.add(v)});
     }
-    print(worldData);
-    print(indiaData);
+    // print(worldData);
+    // print(indiaData);
     return "worldData";
-  }  
-
-
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-                  child: Column(
-      children: <Widget>[
-          MyHeader(imagePath: "assets/icons/Drcorona.svg",topText: "India need you",bottomText: "all stay at home",),
-          SizedBox(height: 0,),
-          Padding(padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: <Widget>[
-              Row(
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            MyHeader(
+              imagePath: "assets/icons/Drcorona.svg",
+              topText: "India need you",
+              bottomText: "all stay at home",
+            ),
+            SizedBox(
+              height: 0,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
                 children: <Widget>[
-                  RichText(text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: "India's Overview\n",
-                        style: TextStyle(
-                          color: Colors.grey[800],
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600
+                  Row(
+                    children: <Widget>[
+                      RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                          text: "India's Overview\n",
+                          style: TextStyle(
+                              color: Colors.grey[800],
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600),
                         ),
-                      ),
-                    ]
-                  )
-                  ),
-                  Spacer(),
-                  Text(
-                    today,
-                    style: TextStyle(
-                      color: myPrimaryColor
-                    ),
+                      ])),
+                      Spacer(),
+                      Text(
+                        today,
+                        style: TextStyle(color: myPrimaryColor),
+                      )
+                    ],
                   )
                 ],
-              )
-            ],
-          ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 12,horizontal:16),
-            padding: EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(25),
-              boxShadow: [
-                BoxShadow(
-                  offset: Offset(0,6),
-                  blurRadius: 30,
-                  color: myShadowColor
-                )
-              ]
+              ),
             ),
-            
-            child: FutureBuilder(
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(25),
+                  boxShadow: [
+                    BoxShadow(
+                        offset: Offset(0, 6),
+                        blurRadius: 30,
+                        color: myShadowColor)
+                  ]),
+              child: FutureBuilder(
                   future: _getData(),
-                  builder: (BuildContext context,AsyncSnapshot snapshot){
-                    if(snapshot.data == null)
-                    return Container(child: Text("Loading.."),);
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.data == null)
+                      return Container(
+                        child: Text("Loading.."),
+                      );
                     return Container(
                       child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-              Counter(title: "Infected",color: myPrimaryColor,number: indiaData[0],),
-              Counter(title: "Recovered",color: myRecovercolor,number: indiaData[1],),
-              Counter(title: "Deaths",color: myDeathColor,number: indiaData[2],),
-            ],
-            ),
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Counter(
+                            title: "Infected",
+                            color: myPrimaryColor,
+                            number: indiaData[0],
+                          ),
+                          Counter(
+                            title: "Recovered",
+                            color: myRecovercolor,
+                            number: indiaData[1],
+                          ),
+                          Counter(
+                            title: "Deaths",
+                            color: myDeathColor,
+                            number: indiaData[2],
+                          ),
+                        ],
+                      ),
                     );
-                  }
-                ),
-          ),
-          SizedBox(height: 8,),
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0,),
-                child: Text("World Pandemic",style: TextStyle(
-                  fontWeight: FontWeight.w600
-                ),),
-              )
-            ],
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 12,horizontal:16),
-            padding: EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(25),
-              boxShadow: [
-                BoxShadow(
-                  offset: Offset(0,6),
-                  blurRadius: 30,
-                  color: myShadowColor
+                  }),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20.0,
+                  ),
+                  child: Text(
+                    "World Pandemic",
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
                 )
-              ]
+              ],
             ),
-            
-            child: FutureBuilder(
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(25),
+                  boxShadow: [
+                    BoxShadow(
+                        offset: Offset(0, 6),
+                        blurRadius: 30,
+                        color: myShadowColor)
+                  ]),
+              child: FutureBuilder(
                   future: _getWorldData(),
-                  builder: (BuildContext context,AsyncSnapshot snapshot){
-                    if(snapshot.data == null)
-                    return Container(child: Text("Loading.."),);
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.data == null)
+                      return Container(
+                        child: Text("Loading.."),
+                      );
                     return Container(
                       child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-              Counter(title: "Infected",color: myPrimaryColor,number: worldData[0],),
-              Counter(title: "Recovered",color: myRecovercolor,number: worldData[1],),
-              Counter(title: "Deaths",color: myDeathColor,number: worldData[2],),
-            ],
-            ),
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Counter(
+                            title: "Infected",
+                            color: myPrimaryColor,
+                            number: worldData[0],
+                          ),
+                          Counter(
+                            title: "Recovered",
+                            color: myRecovercolor,
+                            number: worldData[1],
+                          ),
+                          Counter(
+                            title: "Deaths",
+                            color: myDeathColor,
+                            number: worldData[2],
+                          ),
+                        ],
+                      ),
                     );
-                  }
-                ),
-          ),
-      ],
-    ),
+                  }),
+            ),
+          ],
         ),
-    bottomNavigationBar: AnimatedBottomBar(
-      barItems: widget.barItems,
+      ),
+      bottomNavigationBar: AnimatedBottomBar(
+        barItems: widget.barItems,
         animationDuration: const Duration(milliseconds: 300),
-        onTapBar: (index){
+        onTapBar: (index) {
           setState(() {
             selectedItem = index;
             // print(selectedItem);
           });
         },
         gettingSelected: 0,
-    ),
+      ),
     );
   }
 }

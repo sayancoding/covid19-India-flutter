@@ -34,53 +34,24 @@ class StatesWiseInfo extends StatefulWidget {
 
 class _StatesWiseInfoState extends State<StatesWiseInfo> {
   int selectedItem = 1;
-  List<String> stateNameList = [
-    "Andaman and Nicobar Islands",
-    "Andhra Pradesh",
-    "Arunachal Pradesh",
-    "Assam",
-    "Bihar",
-    "Chandigarh",
-    "Chhattisgarh",
-    "Delhi",
-    "Goa",
-    "Gujarat",
-    "Haryana",
-    "Himachal Pradesh",
-    "Jammu and Kashmir",
-    "Jharkhand",
-    "Karnataka",
-    'Kerala',
-    "Ladakh",
-    "Madhya Pradesh",
-    "Maharashtra",
-    "Manipur",
-    "Meghalaya",
-    "Mizoram",
-    "Odisha",
-    "Puducherry",
-    "Punjab",
-    "Rajasthan",
-    "TamilNadu",
-    "Telangana",
-    "Tripura",
-    "Uttar Pradesh",
-    "Uttarakhand",
-    "West Bengal"
-  ];
   List finalFormatedData = [];
-  
+  List<String> stateNewList = [];
+
   // DateTime now = DateTime.now();
-String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now());
+  String formattedDate =
+      DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now());
 
   String url = "https://api.covid19india.org/state_district_wise.json";
   Future<List> _getData() async {
+    finalFormatedData.clear();
+    stateNewList.clear();
     var response = await http.get(url);
     Map data = json.decode(response.body);
     // print(data);
     List formated = [];
     List st = [];
     data.forEach((k, v) => {st.add(v["districtData"])});
+    data.forEach((k, v) => {stateNewList.add(k)});
     for (int i = 0; i < st.length; i++) {
       List subDistrict = [];
       Map el = st[i];
@@ -110,13 +81,17 @@ String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now())
         deth += (formated[st][i][2]);
         rcrvd += (formated[st][i][3]);
       }
-      temp.add(stateNameList[st]);
+      temp.add(stateNewList[st]);
       temp.add(act);
       temp.add(confrm);
       temp.add(deth);
       temp.add(rcrvd);
+      // print(st);
       finalFormatedData.add(temp);
     }
+    // print(stateNewList.length);
+    // print(formated.length);
+    // print(formated[formated.length - 1]);
 
     return finalFormatedData;
   }
@@ -125,7 +100,7 @@ String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now())
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-              child: Column(
+        child: Column(
           children: <Widget>[
             MyHeader(
               imagePath: "assets/icons/symptoms.svg",
@@ -148,11 +123,14 @@ String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now())
                           style: TextStyle(
                               fontWeight: FontWeight.w600, fontSize: 18.0),
                         ),
-                        SizedBox(width: 4.0,),
-                        Text(formattedDate,style: TextStyle(
-                          color: Colors.orangeAccent,
-                          fontSize: 10.0
-                        ),)
+                        SizedBox(
+                          width: 4.0,
+                        ),
+                        Text(
+                          formattedDate,
+                          style: TextStyle(
+                              color: Colors.orangeAccent, fontSize: 10.0),
+                        )
                       ],
                     ),
                     SizedBox(
@@ -202,26 +180,31 @@ String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now())
                                     return Center(child: Text("Loading.."));
                                   }
                                   return ListView.builder(
-                                      itemCount: snapshot.data == null
-                                          ? 0
-                                          : 32,
+                                      itemCount: snapshot.data == null ? 0 : stateNewList.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         return ListData(
                                           stateName: snapshot.data[index][0],
-                                          death: snapshot.data[index][3].toString(),
-                                          recovered: snapshot.data[index][4].toString(),
-                                          active: snapshot.data[index][1].toString(),
-                                          confirmed: snapshot.data[index][2].toString(),
+                                          death: snapshot.data[index][3]
+                                              .toString(),
+                                          recovered: snapshot.data[index][4]
+                                              .toString(),
+                                          active: snapshot.data[index][1]
+                                              .toString(),
+                                          confirmed: snapshot.data[index][2]
+                                              .toString(),
                                         );
                                       });
                                 }),
                           ),
-                          SizedBox(height: 4.0,),
+                          SizedBox(
+                            height: 4.0,
+                          ),
                           Container(
-                            child: Text("Source: covid19india.org",style: TextStyle(
-                              fontSize: 8.0
-                            ),),
+                            child: Text(
+                              "Source: covid19india.org",
+                              style: TextStyle(fontSize: 8.0),
+                            ),
                           )
                         ],
                       ),
@@ -234,16 +217,16 @@ String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now())
         ),
       ),
       bottomNavigationBar: AnimatedBottomBar(
-      barItems: widget.barItems,
+        barItems: widget.barItems,
         animationDuration: const Duration(milliseconds: 300),
-        onTapBar: (index){
+        onTapBar: (index) {
           setState(() {
             selectedItem = index;
             // print(selectedItem);
           });
         },
         gettingSelected: 1,
-    ),
+      ),
     );
   }
 }
